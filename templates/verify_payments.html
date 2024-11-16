@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Payments</title>
+</head>
+<body>
+    <h1>Verify Pending Payments</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Username</th>
+                <th>License Expiry</th>
+                <th>Payment Method</th>
+                <th>Payment Proof</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for payment in payments %}
+            <tr>
+                <td>{{ payment.id }}</td>
+                <td>{{ payment.username }}</td>
+                <td>{{ payment.license_expiry }}</td>
+                <td>{{ payment.payment_method }}</td>
+                <td><a href="{{ payment.payment_proof }}" target="_blank">View Proof</a></td>
+                <td>
+                    <form action="{{ url_for('approve_payment', user_id=payment.id) }}" method="POST">
+                        <button type="submit">Approve</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

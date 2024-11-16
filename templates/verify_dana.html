@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head><title>Verifikasi Pembayaran</title></head>
+<body>
+<h1>Verifikasi Pembayaran</h1>
+{% for payment in payments %}
+    <div>
+        <p>Username: {{ payment['username'] }}</p>
+        <p>Metode Pembayaran: {{ payment['payment_method'] }}</p>
+        <p><a href="{{ url_for('static', filename=payment['payment_proof']) }}" target="_blank">Lihat Bukti</a></p>
+        <form action="{{ url_for('approve_payment', user_id=payment['id']) }}" method="post">
+            <input type="submit" value="Setujui Pembayaran">
+        </form>
+    </div>
+    <hr>
+{% endfor %}
+</body>
+</html>

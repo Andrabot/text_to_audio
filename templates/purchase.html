@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beli Lisensi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FF7F50, #FFD700); /* Orange to Kuningan gradient */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow-x: hidden; /* Menghindari scroll horizontal */
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            padding: 40px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            box-sizing: border-box;
+            position: relative;
+            transform: translateY(-20px);
+        }
+
+        .container:before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            background: linear-gradient(135deg, #FF6347, #FFD700);
+            z-index: -1;
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            color: #333;
+            font-size: 32px;
+            margin-bottom: 30px;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin: 12px 0 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        select, input[type="file"], input[type="submit"] {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+            background-color: #f7f7f7;
+        }
+
+        select:focus, input[type="file"]:focus {
+            border-color: #FF6347; /* orange-red */
+            outline: none;
+        }
+
+        .payment-options {
+            display: flex;
+            justify-content: space-around; /* Menyusun secara horizontal dan rata */
+            margin-top: 15px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .option {
+            text-align: center;
+            cursor: pointer;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            width: 45%; /* Membuat lebar 45% untuk setiap opsi */
+            margin-bottom: 15px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .option:hover {
+            transform: scale(1.05);
+            background-color: #FFFAF0;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .option i {
+            font-size: 28px;
+            color: #FF6347;
+        }
+
+        .option label {
+            display: block;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .qr-code {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .qr-code img {
+            width: 200px;
+            height: 200px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="submit"] {
+            background: linear-gradient(135deg, #FF6347, #FFD700); /* Orange to Kuningan */
+            color: white;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            padding: 16px;
+            z-index: 10;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+        }
+
+        input[type="submit"]:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        input[type="submit"]::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            background-color: white;
+            border: 2px solid white;
+            transition: all 0.6s ease-in-out;
+            transform: translate(-50%, -50%) rotate(45deg);
+            animation: lightMove 2s linear infinite;
+            border-radius: 50%;
+            z-index: -10;
+        }
+
+        @keyframes lightMove {
+            0% {
+                transform: translate(-50%, -50%) scale(1) rotate(45deg);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.5) rotate(135deg);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1) rotate(225deg);
+            }
+        }
+
+        /* Responsif untuk layar kecil */
+        @media (max-width: 768px) {
+            .payment-options {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .option {
+                width: 80%;
+                margin-bottom: 15px;
+            }
+
+            input[type="submit"] {
+                font-size: 16px;
+                padding: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Beli Lisensi</h1>
+        <form action="{{ url_for('purchase_license') }}" method="post" enctype="multipart/form-data">
+            <label for="license_type">Pilih Tipe Lisensi:</label>
+            <select name="license_type" id="license_type" required>
+                <option value="weekly">Mingguan</option>
+                <option value="monthly">Bulanan</option>
+            </select>
+
+            <label for="payment_method">Metode Pembayaran:</label>
+            <div class="payment-options">
+                <div class="option">
+                    <input type="radio" name="payment_method" value="dana" id="dana" required onclick="showQRCode('dana')">
+                    <label for="dana"><i class="fas fa-wallet"></i> Dana</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="payment_method" value="gopay" id="gopay" onclick="showQRCode('gopay')">
+                    <label for="gopay"><i class="fas fa-money-check-alt"></i> GoPay</label>
+                </div>
+            </div>
+
+            <div id="dana-qr" class="qr-code">
+                <img src="/static/dana.jpg" alt="QR Dana">
+                <p>Scan untuk pembayaran via Dana</p>
+            </div>
+            <div id="gopay-qr" class="qr-code">
+                <img src="/static/gopay.jpg" alt="QR GoPay">
+                <p>Scan untuk pembayaran via GoPay</p>
+            </div>
+
+            <label for="payment_proof">Upload Bukti Pembayaran:</label>
+            <input type="file" name="payment_proof" id="payment_proof" required>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <script>
+        function showQRCode(paymentMethod) {
+            document.getElementById('dana-qr').style.display = 'none';
+            document.getElementById('gopay-qr').style.display = 'none';
+
+            if (paymentMethod === 'dana') {
+                document.getElementById('dana-qr').style.display = 'block';
+            } else if (paymentMethod === 'gopay') {
+                document.getElementById('gopay-qr').style.display = 'block';
+            }
+        }
+    </script>
+
+</body>
+</html>

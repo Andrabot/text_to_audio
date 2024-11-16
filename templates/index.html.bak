@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Text to Audio Converter</title>
+    <style>
+        /* Reset default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: radial-gradient(circle, #6a11cb 30%, #2575fc 90%);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+            height: 100%;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 30%, transparent 70%);
+            animation: spin 20s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .container {
+            position: relative;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 800px;
+            padding: 30px;
+            text-align: center;
+            animation: fadeIn 1.2s ease;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #ffeb3b;
+            animation: slideDown 1s ease;
+        }
+
+        .limit-info {
+            margin-bottom: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #f0ad4e;
+            animation: fadeIn 2s ease;
+        }
+
+        .instructions {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: left;
+            font-size: 14px;
+            margin-bottom: 20px;
+            animation: fadeIn 2.5s ease;
+        }
+
+        .instructions h3 {
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            border: none;
+            border-radius: 12px;
+            padding: 15px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            resize: none;
+            animation: zoomIn 1.5s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            animation: zoomIn 1.5s ease;
+        }
+
+        select:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            color: #fff;
+            background: linear-gradient(45deg, #ff7b7b, #ffb84d);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+            animation: bounceIn 2s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(45deg, #ff9a9a, #ffcc66);
+            transform: scale(1.05);
+        }
+
+        .audio-player {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            animation: fadeIn 3s ease;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .download-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 15px;
+            font-size: 14px;
+            background: #28a745;
+            color: #fff;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: #1e8237;
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 13px;
+            color: #fff;
+            opacity: 0.8;
+        }
+
+        footer a {
+            color: #ffeb3b;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .admin-link {
+            margin-top: 20px;
+            display: inline-block;
+            padding: 10px 15px;
+            font-size: 14px;
+            background: #d9534f;
+            color: #fff;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .admin-link:hover {
+            background: #c12f2a;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.5);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Nama Pengguna dan Tombol Logout -->
+        {% if session.get('user_id') %}
+        <div style="margin-bottom: 20px; color: #ffeb3b;">
+            <p>Selamat datang, {{ session.get('username') }}!</p>
+            <form action="/logout" method="post">
+                <button type="submit" style="background-color: #d9534f; color: white; padding: 10px 20px; border-radius: 8px;">Logout</button>
+            </form>
+        </div>
+        {% endif %}
+        
+        <h1>Text to Audio Converter</h1>
+        <p class="limit-info">Limit penggunaan gratis tersisa: {{ limit_left }}</p>
+
+        <div class="instructions">
+            <h3>Cara Menggunakan:</h3>
+            <p>1. Masukkan teks ke dalam kotak di bawah ini.</p>
+            <p>2. Pilih bahasa untuk audio yang dihasilkan.</p>
+            <p>3. Klik "Convert to Audio" untuk memproses teks menjadi audio.</p>
+            <p>4. Gunakan tombol "Download" untuk mengunduh audio.</p>
+        </div>
+
+        <form action="/convert" method="post">
+            <textarea name="text" placeholder="Masukkan teks di sini..." required></textarea>
+            <select name="language" required>
+                <option value="" disabled selected>Pilih bahasa</option>
+                <option value="id">Indonesia</option>
+                <option value="en">Inggris</option>
+                <option value="fr">Prancis</option>
+                <option value="de">Jerman</option>
+                <option value="es">Spanyol</option>
+            </select>
+            <button type="submit">Convert to Audio</button>
+        </form>
+
+        {% if audio_file %}
+        <div class="audio-player">
+            <p>Audio yang dihasilkan:</p>
+            <audio controls>
+                <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mp3">
+                Browser Anda tidak mendukung pemutar audio.
+            </audio>
+            <a href="{{ url_for('static', filename=audio_file) }}" download class="download-btn">
+                Unduh Audio
+            </a>
+        </div>
+        {% endif %}
+
+        {% if session.get('user_role') == 'admin' %}
+        <a href="{{ url_for('verify_payments') }}" class="admin-link">Verifikasi Pembayaran</a>
+        {% endif %}
+
+<footer>
+    <p>&copy; 2024 Text to Audio Converter | 
+        <a href="https://github.com/username">GitHub</a> | 
+        <a href="https://youtube.com/username">YouTube</a>
+    </p>
+    <!-- Informasi Pencipta -->
+    <div style="margin-top: 10px; display: flex; align-items: center; justify-content: center;">
+        <img src="/static/icn.jpg" alt="Icon Pencipta" style="width: 40px; height: 40px; margin-right: 10px; border-radius: 50%; border: 2px solid #fff;">
+        <p style="color: #ffeb3b; font-weight: bold; font-size: 14px; text-align: center;">Dibuat oleh: [Danil Calon Miliarder]</p>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
